@@ -167,4 +167,13 @@
 		border-color: var(--build);
 		background: var(--build-soft);
 	}
+
+	@media (max-width: 600px) {
+		.list {
+			flex-basis: 80vw;
+			width: 80vw;
+			max-width: 300px;
+			max-height: none;
+		}
+	}
 </style>

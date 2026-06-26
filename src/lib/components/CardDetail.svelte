@@ -343,4 +343,20 @@
 		opacity: 0.4;
 		cursor: default;
 	}
+
+	@media (max-width: 600px) {
+		.modal {
+			padding: 2vh 12px;
+		}
+		.panel {
+			padding: 20px 16px 22px;
+			border-radius: 14px;
+		}
+		.title {
+			font-size: 17px;
+		}
+		.notes {
+			min-height: 150px;
+		}
+	}
 </style>

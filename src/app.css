@@ -107,6 +107,12 @@ body {
 	margin: 0 auto;
 }
 
+@media (max-width: 600px) {
+	body {
+		padding: 22px 14px clamp(40px, 6vh, 72px);
+	}
+}
+
 .eyebrow {
 	font-family: var(--mono);
 	font-size: 11px;

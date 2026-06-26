@@ -718,4 +718,53 @@
 		opacity: 1;
 		transform: translateX(-50%) translateY(0);
 	}
+
+	/* ── 모바일 ──────────────────────────────────────── */
+	@media (max-width: 600px) {
+		.topbar {
+			gap: 10px;
+			margin-bottom: 22px;
+		}
+		.title,
+		.title-input {
+			font-size: 23px;
+			margin-top: 6px;
+		}
+		.title {
+			padding: 3px 7px;
+			margin-left: -7px;
+			margin-right: -7px;
+		}
+		.who {
+			display: none;
+		}
+		.theme-toggle {
+			width: 36px;
+			height: 36px;
+		}
+		.controls {
+			gap: 6px;
+		}
+		.btn-reset {
+			margin-left: 0;
+		}
+		.hero {
+			margin-top: 24px;
+		}
+		.features {
+			margin-top: 40px;
+		}
+		.preview {
+			margin-top: 40px;
+			padding: 12px;
+			gap: 8px;
+		}
+		.p-h {
+			font-size: 9px;
+		}
+		.p-card {
+			font-size: 11px;
+			padding: 8px;
+		}
+	}
 </style>
