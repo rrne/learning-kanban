@@ -129,4 +129,20 @@
 		border-color: var(--build);
 		background: var(--build-soft);
 	}
+
+	@media (max-width: 600px) {
+		.section {
+			margin-bottom: 22px;
+		}
+		.lists {
+			flex-direction: column;
+			align-items: stretch;
+			overflow-x: visible;
+			gap: 12px;
+		}
+		.add-list {
+			flex: none;
+			width: 100%;
+		}
+	}
 </style>

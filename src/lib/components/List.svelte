@@ -170,9 +170,9 @@
 
 	@media (max-width: 600px) {
 		.list {
-			flex-basis: 80vw;
-			width: 80vw;
-			max-width: 300px;
+			flex: none;
+			width: 100%;
+			max-width: none;
 			max-height: none;
 		}
 	}
