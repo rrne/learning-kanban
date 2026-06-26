@@ -121,10 +121,9 @@
 		inset: 0;
 		z-index: 100;
 		display: flex;
-		align-items: flex-start;
-		justify-content: center;
-		padding: 4vh 20px 4vh;
 		overflow-y: auto;
+		padding: 28px 20px;
+		-webkit-overflow-scrolling: touch;
 	}
 	.backdrop {
 		position: fixed;
@@ -138,6 +137,7 @@
 		position: relative;
 		width: 100%;
 		max-width: 760px;
+		margin: auto;
 		background: var(--card);
 		border: 1px solid var(--line-strong);
 		border-radius: 16px;
@@ -346,7 +346,7 @@
 
 	@media (max-width: 600px) {
 		.modal {
-			padding: 2vh 12px;
+			padding: 16px 12px;
 		}
 		.panel {
 			padding: 20px 16px 22px;
