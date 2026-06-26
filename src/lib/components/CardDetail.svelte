@@ -121,9 +121,9 @@
 		inset: 0;
 		z-index: 100;
 		display: flex;
-		overflow-y: auto;
-		padding: 28px 20px;
-		-webkit-overflow-scrolling: touch;
+		align-items: center;
+		justify-content: center;
+		padding: 24px 20px;
 	}
 	.backdrop {
 		position: fixed;
@@ -137,7 +137,10 @@
 		position: relative;
 		width: 100%;
 		max-width: 760px;
-		margin: auto;
+		max-height: calc(100vh - 48px);
+		max-height: calc(100dvh - 48px);
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
 		background: var(--card);
 		border: 1px solid var(--line-strong);
 		border-radius: 16px;
@@ -346,9 +349,11 @@
 
 	@media (max-width: 600px) {
 		.modal {
-			padding: 16px 12px;
+			padding: 12px;
 		}
 		.panel {
+			max-height: calc(100vh - 24px);
+			max-height: calc(100dvh - 24px);
 			padding: 20px 16px 22px;
 			border-radius: 14px;
 		}
