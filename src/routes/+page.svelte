@@ -51,7 +51,10 @@
 	<div class="topbar">
 		{#if board.user}
 			<div class="headings">
-				<div class="eyebrow">Sprint Board · Frontend → Full-stack Builder</div>
+				<div class="eyebrow">
+					<span class="eb-full">Sprint Board · Frontend → Full-stack Builder</span>
+					<span class="eb-short">Sprint Board</span>
+				</div>
 				{#if editingTitle}
 					<div class="title-edit">
 						<input
@@ -238,6 +241,12 @@
 	.headings {
 		flex: 1;
 		min-width: 0;
+	}
+	.headings .eyebrow {
+		white-space: nowrap;
+	}
+	.eb-short {
+		display: none;
 	}
 	.top-actions {
 		display: flex;
@@ -731,6 +740,12 @@
 
 	/* ── 모바일 ──────────────────────────────────────── */
 	@media (max-width: 600px) {
+		.eb-full {
+			display: none;
+		}
+		.eb-short {
+			display: inline;
+		}
 		.topbar {
 			gap: 10px;
 			margin-bottom: 22px;
