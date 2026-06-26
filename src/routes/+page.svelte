@@ -374,6 +374,7 @@
 		border-radius: 12px;
 		padding: 16px;
 		margin-top: 6px;
+		margin-bottom: 40px;
 		cursor: pointer;
 		transition:
 			color 0.15s ease,
@@ -525,7 +526,7 @@
 		gap: 12px;
 		justify-content: center;
 		max-width: 660px;
-		margin: 56px auto 0;
+		margin: 56px auto 40px;
 		padding: 16px;
 		background: var(--card);
 		border: 1px solid var(--line);
