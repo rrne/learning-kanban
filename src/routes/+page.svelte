@@ -186,23 +186,27 @@
 		<ProgressMeter />
 
 		<div class="controls">
-			<label for="start">시작</label>
-			<input
-				id="start"
-				type="date"
-				value={board.start}
-				max={board.end}
-				onchange={(e) => board.setStart(e.currentTarget.value)}
-			/>
+			<span class="field">
+				<label for="start">시작</label>
+				<input
+					id="start"
+					type="date"
+					value={board.start}
+					max={board.end}
+					onchange={(e) => board.setStart(e.currentTarget.value)}
+				/>
+			</span>
 			<span class="dash">→</span>
-			<label for="end">종료</label>
-			<input
-				id="end"
-				type="date"
-				value={board.end}
-				min={board.start}
-				onchange={(e) => board.setEnd(e.currentTarget.value)}
-			/>
+			<span class="field">
+				<label for="end">종료</label>
+				<input
+					id="end"
+					type="date"
+					value={board.end}
+					min={board.start}
+					onchange={(e) => board.setEnd(e.currentTarget.value)}
+				/>
+			</span>
 			<span class="days">{board.metrics.totalDays}일</span>
 			{#if board.syncing}<span class="sync">동기화 중…</span>{/if}
 			<button class="btn-reset" onclick={onReset}>전체 초기화</button>
@@ -598,6 +602,12 @@
 		background: var(--card);
 		border: 1px solid var(--line);
 		border-radius: 12px;
+	}
+	.field {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		white-space: nowrap;
 	}
 	.controls label {
 		font-family: var(--mono);
