@@ -6,21 +6,16 @@ export type Status = 'todo' | 'doing' | 'done';
 /** 레인(달) 식별자. 1·2·3월차 또는 자유 도메인 레인. */
 export type LaneKey = 1 | 2 | 3 | 'domain';
 
-/** 학습 카드 한 장 */
+/** 학습 카드 한 장 (DB의 cards 행과 1:1) */
 export interface Card {
 	id: string;
-	month: LaneKey;
+	/** 레인 식별자. DB에는 문자열로 저장된다 ('1' | '2' | '3' | 'domain') */
+	month: string;
 	title: string;
 	/** Definition of Done — 이 카드를 "완료"로 부를 수 있는 기준 */
 	dod: string;
 	status: Status;
-}
-
-/** 보드 전체 상태 (localStorage에 직렬화되는 단위) */
-export interface BoardState {
-	/** 스프린트 시작일 (YYYY-MM-DD) */
-	start: string;
-	cards: Card[];
+	position: number;
 }
 
 /** 진행 페이스 지표 */
