@@ -1,19 +1,80 @@
+/* ── 라이트 테마 (기본) ──────────────────────────────── */
 :root {
-	--paper: #e9edf3;
-	--ink: #14181f;
-	--muted: #5b6573;
-	--line: #c7cedb;
+	--bg: #fbfbfd;
+	--bg-soft: #eef0f4;
 	--card: #ffffff;
-	--build: #e0631f;
-	--build-soft: #fbe4d6;
-	--done: #1f8a5b;
-	--done-soft: #d9efe4;
-	--doing: #2f6df0;
-	--doing-soft: #dde7fd;
-	--warn: #c0392b;
-	--warn-soft: #fbe0dc;
-	--mono: ui-monospace, SFMono-Regular, Menlo, 'Cascadia Code', monospace;
-	--sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Apple SD Gothic Neo', sans-serif;
+	--card-2: #f5f6f9;
+	--card-hover: #eef0f4;
+
+	--line: rgba(0, 0, 0, 0.085);
+	--line-strong: rgba(0, 0, 0, 0.16);
+	--tint: rgba(0, 0, 0, 0.018);
+
+	--ink: #16181d;
+	--text-2: #3f444c;
+	--muted: #6a7180;
+	--faint: #9298a2;
+
+	--build: #5b54d6;
+	--build-fill: #5e6ad2;
+	--build-soft: rgba(94, 106, 210, 0.1);
+
+	--doing: #3568e0;
+	--doing-soft: rgba(53, 104, 224, 0.1);
+	--done: #15935b;
+	--done-soft: rgba(21, 147, 91, 0.11);
+	--warn: #cf3b36;
+	--warn-soft: rgba(207, 59, 54, 0.1);
+
+	--glow: radial-gradient(900px 480px at 50% -10%, rgba(94, 106, 210, 0.1), transparent 70%),
+		radial-gradient(600px 360px at 88% 0%, rgba(21, 147, 91, 0.04), transparent 60%);
+
+	--radius: 14px;
+	--radius-sm: 9px;
+	--shadow-sm: 0 1px 2px rgba(20, 24, 40, 0.06);
+	--shadow: 0 2px 6px rgba(20, 24, 40, 0.07), 0 14px 32px rgba(20, 24, 40, 0.08);
+
+	--mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+	--sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Apple SD Gothic Neo', sans-serif;
+
+	color-scheme: light;
+}
+
+/* ── 다크 테마 ───────────────────────────────────────── */
+:root[data-theme='dark'] {
+	--bg: #08090b;
+	--bg-soft: #101217;
+	--card: #1a1d23;
+	--card-2: #22262e;
+	--card-hover: #252a33;
+
+	--line: rgba(255, 255, 255, 0.1);
+	--line-strong: rgba(255, 255, 255, 0.18);
+	--tint: rgba(255, 255, 255, 0.035);
+
+	--ink: #f4f5f7;
+	--text-2: #c8ccd4;
+	--muted: #9096a1;
+	--faint: #6f747d;
+
+	--build: #9aa0ff;
+	--build-fill: #5e6ad2;
+	--build-soft: rgba(130, 140, 255, 0.16);
+
+	--doing: #6b97ff;
+	--doing-soft: rgba(107, 151, 255, 0.16);
+	--done: #4fd29e;
+	--done-soft: rgba(79, 210, 158, 0.15);
+	--warn: #ff7b7b;
+	--warn-soft: rgba(255, 123, 123, 0.15);
+
+	--glow: radial-gradient(900px 480px at 50% -8%, rgba(94, 106, 210, 0.26), transparent 70%),
+		radial-gradient(600px 360px at 85% 0%, rgba(67, 198, 146, 0.07), transparent 60%);
+
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+	--shadow: 0 2px 8px rgba(0, 0, 0, 0.45), 0 16px 40px rgba(0, 0, 0, 0.35);
+
+	color-scheme: dark;
 }
 
 * {
@@ -29,34 +90,65 @@ body {
 body {
 	font-family: var(--sans);
 	color: var(--ink);
-	background:
-		linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 26px 26px,
-		linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 26px 26px,
-		var(--paper);
-	background-blend-mode: soft-light, soft-light, normal;
+	background-color: var(--bg);
+	/* 상단 중앙의 은은한 글로우 (테마별 토큰) */
+	background-image: var(--glow);
+	background-attachment: fixed;
 	min-height: 100%;
-	padding: 22px 18px 60px;
+	padding: 40px 20px 160px;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	letter-spacing: -0.005em;
+	transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .wrap {
-	max-width: 1080px;
+	max-width: 1120px;
 	margin: 0 auto;
 }
 
 .eyebrow {
 	font-family: var(--mono);
 	font-size: 11px;
-	letter-spacing: 0.18em;
+	letter-spacing: 0.16em;
 	text-transform: uppercase;
-	color: var(--muted);
+	color: var(--build);
+	font-weight: 500;
 }
 
 h1 {
-	font-size: 24px;
-	margin: 4px 0 0;
-	letter-spacing: -0.01em;
+	font-size: 30px;
+	line-height: 1.18;
+	margin: 10px 0 0;
+	letter-spacing: -0.025em;
+	font-weight: 600;
+	color: var(--ink);
 }
 
 h1 b {
-	color: var(--build);
+	font-weight: 600;
+	background: linear-gradient(100deg, #a5abff, #5e6ad2);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+::selection {
+	background: rgba(94, 106, 210, 0.4);
+}
+
+/* 얇고 어두운 스크롤바 */
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.1);
+	border-radius: 999px;
+	border: 2px solid transparent;
+	background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: rgba(255, 255, 255, 0.18);
+	background-clip: padding-box;
 }

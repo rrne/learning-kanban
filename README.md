@@ -1,71 +1,91 @@
-# 3개월 풀스택 스프린트 보드 🛠️
+# 학습 스프린트 보드 🛠️
 
-프론트엔드 → **풀스택 빌더**로 전환하는 90일 스프린트를 스스로 체크·관리하는 칸반 보드.
-직접 만든 학습 도구로, 진행 상황은 브라우저 `localStorage`에 저장된다.
+프론트엔드 → **풀스택 빌더**로 성장하는 스프린트를 스스로 관리하는 칸반 보드.
+직접 만든 학습 도구이자, 이 도구 자체가 풀스택(인증·DB·API·배포)을 배우는 첫 제품이다.
 
-> **왜 만들었나** — 학습 계획을 "읽기만 하는 문서"가 아니라 **매일 카드를 옮기며 페이스를 확인하는 도구**로 바꾸기 위해. 그리고 이 도구 자체가 Svelte를 배우는 첫 제품이다.
+> **왜 만들었나** — 학습 계획을 "읽기만 하는 문서"가 아니라 **매일 카드를 옮기며 페이스를 확인하는 도구**로 만들기 위해. 그리고 만드는 과정에서 백엔드 사고를 직접 체득하기 위해.
 
 ## 핵심 기능
 
-- **3개월 × 컬럼(할 일 / 진행 중 / 완료) 칸반** — 달별 레인 + 자유 도메인 레인
-- **페이스 게이지** — 경과한 시간(%)과 완료율(%)을 비교해 "뒤처짐 / OK" 판정
-- **WIP 제한(≤2)** — 동시에 진행하는 일을 강제로 줄여 "끝내는 힘" 훈련
-- **카드 인라인 편집** — 제목·완료기준(Definition of Done)을 클릭해서 바로 수정
-- **시작일 조정 · 전체 초기화**
-- **자동 저장** — 모든 변경이 즉시 `localStorage`에 기록 ("저장됨" 토스트)
+- **자유 구조 칸반 (Trello식)** — 섹션 → 리스트 → 카드 3계층을 자유롭게 추가/이름수정/삭제/정렬
+- **드래그앤드롭** — 카드를 잡아 리스트·섹션 간 이동 및 순서 변경
+- **카드 상세** — 카드를 클릭하면 모달에서 **완료 기준 · 상세 기록 · 하위 할 일(체크리스트)** 편집
+- **기간 타임라인** — 시작일·종료일을 직접 지정(90일 고정 아님), 남은 일수·경과율·오늘 위치 표시
+- **라이트/다크 테마** — 토글 + 선택 저장 (기본 라이트)
+- **GitHub 로그인** — Supabase Auth(OAuth)
+- **클라우드 영속** — 모든 변경이 Supabase에 즉시 저장(낙관적 업데이트), RLS로 본인 데이터만 접근
 
 ## 기술 스택
 
-- [SvelteKit](https://svelte.dev/docs/kit) + **Svelte 5 (runes)**
-- TypeScript
-- Vite 8
+- [SvelteKit](https://svelte.dev/docs/kit) + **Svelte 5 (runes)** · TypeScript · Vite
+- [Supabase](https://supabase.com) — Postgres + Auth(GitHub OAuth) + Row Level Security
 - `@sveltejs/adapter-vercel` (Vercel 배포)
 
-## 구조
+## 데이터 모델
+
+```
+auth.users
+  └─ boards     (사용자당 1행: 제목, 시작일, 종료일)
+  └─ sections   (보드의 큰 묶음)
+       └─ lists      (섹션 안의 컬럼)
+            └─ cards      (리스트 안의 카드: 제목·완료기준·상세기록)
+                 └─ subtasks   (카드의 하위 할 일 체크리스트)
+```
+
+모든 테이블은 `user_id`로 소유자를 구분하고 **RLS로 "본인 데이터만"** 접근하도록 강제한다.
+마이그레이션은 `supabase/migrations/`에 순서대로 들어 있다.
+
+## 프로젝트 구조
 
 ```
 src/
-├─ app.css                       전역 디자인 토큰 + 배경/레이아웃
-├─ app.html                      문서 셸 (title/메타)
+├─ app.css                       디자인 토큰(라이트/다크) + 전역 스타일
+├─ app.html                      문서 셸 + FOUC 방지 테마 스크립트
 ├─ lib/
-│  ├─ types.ts                   도메인 타입 (Card, BoardState, …)
-│  ├─ data.ts                    상수 + 초기 시드 데이터
-│  ├─ board.svelte.ts            상태 + 동작 싱글톤 ($state/$derived, localStorage 저장)
+│  ├─ types.ts                   도메인 타입 (Section, List, Card, Subtask, …)
+│  ├─ data.ts                    기본 시드 데이터 + 상수
+│  ├─ supabase.ts                Supabase 클라이언트(PKCE)
+│  ├─ board.svelte.ts            상태 + DB CRUD 싱글톤 ($state/$derived)
+│  ├─ theme.svelte.ts            라이트/다크 테마 스토어
 │  └─ components/
-│     ├─ ProgressMeter.svelte    페이스 게이지
-│     ├─ Lane.svelte             레인 1개 (3컬럼)
-│     └─ Card.svelte             카드 1장
+│     ├─ ProgressMeter.svelte    기간 타임라인
+│     ├─ Section.svelte          섹션 1개 (가로 리스트 묶음)
+│     ├─ List.svelte             리스트 1개 (드롭 타깃 + 카드들)
+│     ├─ Card.svelte             카드 1장 (드래그 + 클릭→상세)
+│     └─ CardDetail.svelte       카드 상세 모달 (기록 + 하위 할 일)
 └─ routes/
-   ├─ +layout.svelte             전역 CSS import
-   ├─ +page.ts                   ssr=false (순수 SPA) + prerender
-   └─ +page.svelte               전체 조립
+   ├─ +layout.svelte             테마/보드 초기화
+   ├─ +page.ts                   ssr=false (순수 SPA)
+   └─ +page.svelte               전체 조립 + 헤더/툴바
 ```
-
-**설계 메모**
-- 상태는 전부 클라이언트에 있으므로 `+page.ts`에서 `ssr = false`로 두어 하이드레이션 불일치를 피한다.
-- 상태/로직을 `board.svelte.ts` 한 곳에 모으고 컴포넌트는 그것을 읽기만 한다 → 백엔드로 확장할 때 이 모듈만 API 호출로 바꾸면 된다.
 
 ## 로컬 실행
 
 Node 22 필요 (`.nvmrc` 참고).
 
 ```bash
-nvm use            # 22.17.0
+nvm use            # 22.x
 npm install
+cp .env.example .env   # Supabase URL/anon key 입력
 npm run dev        # 개발 서버
-npm run build      # 프로덕션 빌드
-npm run preview    # 빌드 결과 미리보기
 npm run check      # 타입 체크
+npm run build      # 프로덕션 빌드
 ```
 
-## Vercel 배포
+### 환경변수 (`.env`)
 
-1. 이 레포를 GitHub에 푸시
-2. [vercel.com/new](https://vercel.com/new) → 레포 import
-3. 프레임워크는 **SvelteKit**으로 자동 감지됨. 별도 설정 없이 Deploy
-4. 이후 `main`에 푸시할 때마다 자동 배포
+```
+PUBLIC_SUPABASE_URL=https://YOUR-PROJECT-ref.supabase.co
+PUBLIC_SUPABASE_ANON_KEY=YOUR-ANON-OR-PUBLISHABLE-KEY
+```
 
-## 다음 단계 (학습 로드맵과 연결)
+`PUBLIC_` 접두사가 붙어야 클라이언트 번들에 포함된다. anon/publishable 키는 공개돼도 안전 — RLS가 데이터를 보호한다.
 
-이 앱은 지금 순수 프론트엔드 SPA다. 스프린트 2개월차 "FE를 내 백엔드에 연결"에 도달하면
-`board.svelte.ts`의 `localStorage` 저장부를 Supabase/API 호출로 교체해 **이 도구 자체를 풀스택으로** 만든다.
+## 배포 (Vercel)
+
+1. 레포를 GitHub에 푸시
+2. [vercel.com/new](https://vercel.com/new) → 레포 import (프레임워크 SvelteKit 자동 감지)
+3. **Environment Variables** 에 `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY` 등록 후 Deploy
+4. 배포 URL을 Supabase **Authentication → URL Configuration → Redirect URLs** 에 추가
+   (예: `https://your-app.vercel.app/**`) — 배포본에서 OAuth 로그인이 되도록
+5. 이후 `main`에 푸시할 때마다 자동 배포

@@ -4,8 +4,25 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
+		<meta name="color-scheme" content="dark" />
+		<meta name="theme-color" content="#0a0b0d" />
 		<title>3개월 풀스택 스프린트 보드</title>
 		<meta name="description" content="프론트엔드 → 풀스택 전환 90일 스프린트를 스스로 체크하는 칸반 보드" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+			rel="stylesheet"
+		/>
+		<script>
+			// 초기 깜빡임 방지: 페인트 전에 테마를 먼저 적용 (기본 라이트)
+			try {
+				var t = localStorage.getItem('theme');
+				document.documentElement.setAttribute('data-theme', t === 'dark' ? 'dark' : 'light');
+			} catch (e) {
+				document.documentElement.setAttribute('data-theme', 'light');
+			}
+		</script>
 		%sveltekit.head%
 	</head>
 	<body data-sveltekit-preload-data="hover">
