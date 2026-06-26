@@ -95,7 +95,7 @@ body {
 	background-image: var(--glow);
 	background-attachment: fixed;
 	min-height: 100%;
-	padding: 40px 20px clamp(120px, 16vh, 220px);
+	padding: 40px 20px clamp(48px, 7vh, 96px);
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	letter-spacing: -0.005em;
